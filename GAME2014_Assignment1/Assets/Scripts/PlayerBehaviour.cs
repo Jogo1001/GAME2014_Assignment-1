@@ -138,7 +138,7 @@ public class PlayerBehaviour : MonoBehaviour
            
             playerSprite.enabled = false;
             playerCollider.enabled = false;
-            isShooting = false;
+             isShooting = false;
             isRespawning = true; 
 
          
@@ -182,6 +182,7 @@ public class PlayerBehaviour : MonoBehaviour
         float flashSpeed = 0.1f;
         float elapsed = 0f;
 
+        isRespawning = false;
         while (elapsed < flashDuration)
         {
             playerSprite.color = (playerSprite.color.a > 0.5f) ? transparentColor : originalColor;
@@ -192,6 +193,6 @@ public class PlayerBehaviour : MonoBehaviour
 
        
         playerSprite.color = originalColor;
-        isRespawning = false;
+     
     }
 }

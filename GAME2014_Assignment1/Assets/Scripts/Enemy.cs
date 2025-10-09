@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        DetectPlayer();
         transform.Translate(Vector3.down * speed * Time.deltaTime);
 
         float xPos = Mathf.PingPong(Time.time * speed, screenHorizontalBoundary.max - screenHorizontalBoundary.min) + screenHorizontalBoundary.min;
@@ -41,7 +42,7 @@ public class Enemy : MonoBehaviour
             Reset();
 
         }
-
+     
 
     }
     private void FixedUpdate()
@@ -57,11 +58,11 @@ public class Enemy : MonoBehaviour
     {
 
 
-      
+
         GetComponent<Collider2D>().enabled = false;
         GetComponent<SpriteRenderer>().color = Color.red;
         IsDying = true;
- 
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
