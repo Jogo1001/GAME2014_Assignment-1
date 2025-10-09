@@ -128,8 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52570e4bc2def8645a62c44579d8fbe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBehaviour
-  Direction: {x: 0, y: 0}
-  Destination: {x: 0, y: 0}
   _playerController: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   VerticalBoundary:
     min: -4.08
@@ -138,7 +136,11 @@ MonoBehaviour:
     min: -2
     max: 2
   speed: 3
+  shootingRate: 0.25
   shootingSpeed: 0.5
+  Direction: {x: 0, y: 0}
+  Destination: {x: 0, y: 0}
+  useAccelerometer: 1
 --- !u!60 &4318809287322276131
 PolygonCollider2D:
   m_ObjectHideFlags: 0

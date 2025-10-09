@@ -85,7 +85,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             Debug.Log("You Got Hit!");
-
+            FindObjectOfType<PlayerHealthUI>().TakeDamage(1);
             // reduce health
             collision.GetComponent<Enemy>().DestroyingSequence();
         }

@@ -136,6 +136,11 @@ MonoBehaviour:
   screenVerticalBoundary:
     min: -5.97
     max: 5.52
+  detectionRadius: 3
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  deathDuration: 0.7
 --- !u!60 &5470837304377768202
 PolygonCollider2D:
   m_ObjectHideFlags: 0
