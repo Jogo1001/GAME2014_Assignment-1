@@ -34,8 +34,8 @@ public class PlayerHealthUI : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Debug.Log("All hearts lost — Loading GameOver Scene");
-            SceneManager.LoadScene("GameOver"); // Replace with your actual GameOver scene name
+          
+            SceneManager.LoadScene("GameOver"); 
         }
     }
 

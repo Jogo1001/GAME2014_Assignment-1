@@ -28,6 +28,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField]
     float shootingSpeed;
 
+
     void Start()
     {
         MoveInput = _playerController.FindAction("Move");
