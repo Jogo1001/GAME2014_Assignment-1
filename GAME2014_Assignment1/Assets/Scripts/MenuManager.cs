@@ -12,7 +12,10 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("Instruction"); 
     }
-
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
     public void QuitGame()
     {
         Application.Quit();
