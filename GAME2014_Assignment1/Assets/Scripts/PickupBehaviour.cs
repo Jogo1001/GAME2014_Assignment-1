@@ -6,7 +6,7 @@ public class PickupBehaviour : MonoBehaviour
     float speed;
     bool isCollected = false;
 
-    [SerializeField] GameObject pickupEffectPrefab; // The other GameObject with animation
+    [SerializeField] GameObject pickupEffectPrefab; 
 
     public void Initialize(Boundary boundary, float moveSpeed)
     {
