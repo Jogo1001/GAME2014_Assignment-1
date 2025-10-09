@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6065852422505266644}
   - component: {fileID: 9008857993850577907}
   - component: {fileID: 7964621542885451200}
+  - component: {fileID: 6774089311906760380}
   m_Layer: 0
   m_Name: Helicopter
   m_TagString: Untagged
@@ -113,3 +114,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6774089311906760380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542468376733533587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52570e4bc2def8645a62c44579d8fbe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBehaviour
+  Direction: {x: 0, y: 0}
+  Destination: {x: 0, y: 0}
+  _playerController: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  VerticalBoundary:
+    min: 0
+    max: 0
+  HorizontalBoundary:
+    min: 0
+    max: 0
+  speed: 3

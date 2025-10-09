@@ -25,13 +25,15 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         MoveInput = _playerController.FindAction("Move");
+  
         camera = Camera.main;
     }
     private void Update()
     {
 
-        TouchScreenMove();
        
+       // TraditionalMove();
+        TouchScreenMove();
         CheckBoundaries();
     }
 
@@ -51,6 +53,7 @@ public class PlayerBehaviour : MonoBehaviour
     void TouchScreenMove() 
     {
   
+
         Destination = camera.ScreenToWorldPoint(MoveInput.ReadValue<Vector2>());
         transform.position = Vector3.Lerp(transform.position, Destination, speed * Time.deltaTime);
        
