@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerBehaviour : MonoBehaviour
@@ -7,7 +8,9 @@ public class PlayerBehaviour : MonoBehaviour
     public Vector2 Direction;
     public Vector2 Destination;
     Camera camera;
-
+    BulletManager bulletManager;
+    GameController gamecontroller;
+    GameObject bulletPrefab;
 
 
     [SerializeField]
@@ -21,12 +24,18 @@ public class PlayerBehaviour : MonoBehaviour
 
     [SerializeField]
     public float speed;
-   
+
+    [SerializeField]
+    float shootingSpeed;
+
     void Start()
     {
         MoveInput = _playerController.FindAction("Move");
-  
+        bulletManager = FindObjectOfType<BulletManager>();
+        gamecontroller = FindObjectOfType<GameController>();
+        bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet");
         camera = Camera.main;
+        StartCoroutine(ShootingRoutine());
     }
     private void Update()
     {
@@ -37,7 +46,13 @@ public class PlayerBehaviour : MonoBehaviour
         CheckBoundaries();
     }
 
-   
+    IEnumerator ShootingRoutine()
+    {
+        yield return new WaitForSeconds(shootingSpeed);
+        // Instantiate(bulletPrefab).transform.position = transform.position;
+        bulletManager.GetBullet().transform.position = transform.position;
+        StartCoroutine(ShootingRoutine());
+    }
     void TraditionalMove() 
     {
         Direction = MoveInput.ReadValue<Vector2>();
@@ -70,6 +85,9 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             Debug.Log("You Got Hit!");
+
+            // reduce health
+            collision.GetComponent<Enemy>().DestroyingSequence();
         }
 
     }
