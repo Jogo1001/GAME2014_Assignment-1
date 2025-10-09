@@ -611,6 +611,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694765694}
   m_CullTransparentMesh: 1
+--- !u!1 &877245190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 877245192}
+  - component: {fileID: 877245191}
+  m_Layer: 0
+  m_Name: CoinSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &877245191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877245190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c5792529f9efd4a8bcffc324171e9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupSpawner
+  pickupPrefab: {fileID: 2257436816367736420, guid: 9e1cc5be023bfa64984983da22438852, type: 3}
+  horizontalBoundary:
+    min: -1.93
+    max: 1.93
+  verticalBoundary:
+    min: -5.95
+    max: 5.97
+  spawnInterval: 5
+  pickupSpeed: 2
+--- !u!4 &877245192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877245190}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &885433245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,6 +1747,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Helicopter
       objectReference: {fileID: 0}
+    - target: {fileID: 1542468376733533587, guid: 7d1902dc1d6997f40841c360afa0e5b7, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6065852422505266644, guid: 7d1902dc1d6997f40841c360afa0e5b7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.04
@@ -1810,3 +1867,4 @@ SceneRoots:
   - {fileID: 1944078029}
   - {fileID: 885433247}
   - {fileID: 1535610373}
+  - {fileID: 877245192}
