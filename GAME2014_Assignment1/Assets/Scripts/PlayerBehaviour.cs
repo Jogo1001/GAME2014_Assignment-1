@@ -28,7 +28,14 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField]
     float shootingSpeed;
 
+    [Header("Respawn Settings")]
+    [SerializeField] Transform spawnPosition;
+    [SerializeField] GameObject explosionPrefab;  
+    [SerializeField] SpriteRenderer playerSprite;
+
     bool isShooting = false;
+    bool isRespawning = false;
+    private Collider2D playerCollider;
     void Start()
     {
         MoveInput = _playerController.FindAction("Move");
@@ -36,37 +43,44 @@ public class PlayerBehaviour : MonoBehaviour
         gamecontroller = FindObjectOfType<GameController>();
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet");
         camera = Camera.main;
-  
+
+        if (playerSprite == null)
+            playerSprite = GetComponent<SpriteRenderer>();
+
+        playerCollider = GetComponent<Collider2D>();
+
     }
     private void Update()
     {
+        if (!isRespawning)
+        {
+            TouchScreenMove();
+            HandleShootingState();
+        }
 
-       
-    
-        TouchScreenMove();
         CheckBoundaries();
-        HandleShootingState();
-    
+
     }
     void HandleShootingState()
     {
-     
-        Vector2 moveValue = MoveInput.ReadValue<Vector2>();
+      
+            Vector2 moveValue = MoveInput.ReadValue<Vector2>();
 
-        if (moveValue.magnitude > 0.05f)
-        {
-        
-            if (!isShooting)
+            if (moveValue.magnitude > 0.05f)
             {
-                isShooting = true;
-                StartCoroutine(ShootingRoutine());
+
+                if (!isShooting)
+                {
+                    isShooting = true;
+                    StartCoroutine(ShootingRoutine());
+                }
             }
-        }
-        else
-        {
-            
-            isShooting = false;
-        }
+            else
+            {
+
+                isShooting = false;
+            }
+        
     }
     IEnumerator ShootingRoutine()
     {
@@ -81,29 +95,29 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Vector2 pointerPos = MoveInput.ReadValue<Vector2>();
 
-        // Convert to world position
+     
         Vector3 targetPos = camera.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, Mathf.Abs(camera.transform.position.z)));
 
-        // Keep current Z
+     
         targetPos.z = transform.position.z;
 
-        // Move towards target
+       
         float step = speed * Time.deltaTime;
         Vector3 previousPos = transform.position;
         transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 
-        // Clamp to boundaries
+      
         transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, HorizontalBoundary.min, HorizontalBoundary.max),
             Mathf.Clamp(transform.position.y, VerticalBoundary.min, VerticalBoundary.max),
             transform.position.z
         );
 
-        // --- Rotate around Z-axis based on horizontal movement ---
-        float deltaX = transform.position.x - previousPos.x; // horizontal movement
-        float zRotation = Mathf.Clamp(-deltaX * 200f, -22f, 22f); // scale deltaX to reach ±22°
+       
+        float deltaX = transform.position.x - previousPos.x;
+        float zRotation = Mathf.Clamp(-deltaX * 200f, -22f, 22f); 
 
-        // Smooth rotation (increase Lerp factor for faster response)
+       
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, zRotation), 0.5f);
 
 
@@ -120,10 +134,64 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Debug.Log("You Got Hit!");
             FindObjectOfType<PlayerHealthUI>().TakeDamage(1);
-            // reduce health
+
+           
+            playerSprite.enabled = false;
+            playerCollider.enabled = false;
+            isShooting = false;
+            isRespawning = true; 
+
+         
+            if (explosionPrefab != null)
+            {
+                GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                Destroy(explosion, 1f);
+            }
+
             collision.GetComponent<Enemy>().DestroyingSequence();
+
+            StartCoroutine(PlayerRespawn());
         }
 
     }
+    IEnumerator PlayerRespawn()
+    {
+       
+        yield return new WaitForSeconds(1f);
 
+   
+        transform.position = spawnPosition.position;
+
+    
+        playerSprite.enabled = true;
+    
+
+        yield return StartCoroutine(FlashPlayerSprite());
+     
+
+        playerCollider.enabled = true;
+        isShooting = false;
+       
+    }
+
+    IEnumerator FlashPlayerSprite()
+    {
+        Color originalColor = playerSprite.color;
+        Color transparentColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        float flashDuration = 2.0f;
+        float flashSpeed = 0.1f;
+        float elapsed = 0f;
+
+        while (elapsed < flashDuration)
+        {
+            playerSprite.color = (playerSprite.color.a > 0.5f) ? transparentColor : originalColor;
+            elapsed += flashSpeed;
+            yield return new WaitForSeconds(flashSpeed);
+           
+        }
+
+       
+        playerSprite.color = originalColor;
+        isRespawning = false;
+    }
 }
