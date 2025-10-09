@@ -28,7 +28,7 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField]
     float shootingSpeed;
 
-
+    bool isShooting = false;
     void Start()
     {
         MoveInput = _playerController.FindAction("Move");
@@ -36,43 +36,76 @@ public class PlayerBehaviour : MonoBehaviour
         gamecontroller = FindObjectOfType<GameController>();
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet");
         camera = Camera.main;
-        StartCoroutine(ShootingRoutine());
+  
     }
     private void Update()
     {
 
        
-       // TraditionalMove();
+    
         TouchScreenMove();
         CheckBoundaries();
+        HandleShootingState();
+    
     }
+    void HandleShootingState()
+    {
+     
+        Vector2 moveValue = MoveInput.ReadValue<Vector2>();
 
+        if (moveValue.magnitude > 0.05f)
+        {
+        
+            if (!isShooting)
+            {
+                isShooting = true;
+                StartCoroutine(ShootingRoutine());
+            }
+        }
+        else
+        {
+            
+            isShooting = false;
+        }
+    }
     IEnumerator ShootingRoutine()
     {
-        yield return new WaitForSeconds(shootingSpeed);
-        // Instantiate(bulletPrefab).transform.position = transform.position;
-        bulletManager.GetBullet().transform.position = transform.position;
-        StartCoroutine(ShootingRoutine());
-    }
-    void TraditionalMove() 
-    {
-        Direction = MoveInput.ReadValue<Vector2>();
-        Debug.Log(Direction);
-        transform.position = new Vector3(transform.position.x + Direction.x * speed * Time.deltaTime
-                                         , transform.position.y + Direction.y * speed * Time.deltaTime
-                                         , transform.position.z);
-
-
-
+        while (isShooting)
+        {
+            bulletManager.GetBullet().transform.position = transform.position;
+            yield return new WaitForSeconds(shootingSpeed);
+        }
     }
 
     void TouchScreenMove() 
     {
-  
+        Vector2 pointerPos = MoveInput.ReadValue<Vector2>();
 
-        Destination = camera.ScreenToWorldPoint(MoveInput.ReadValue<Vector2>());
-        transform.position = Vector3.Lerp(transform.position, Destination, speed * Time.deltaTime);
-       
+        // Convert to world position
+        Vector3 targetPos = camera.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, Mathf.Abs(camera.transform.position.z)));
+
+        // Keep current Z
+        targetPos.z = transform.position.z;
+
+        // Move towards target
+        float step = speed * Time.deltaTime;
+        Vector3 previousPos = transform.position;
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
+
+        // Clamp to boundaries
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, HorizontalBoundary.min, HorizontalBoundary.max),
+            Mathf.Clamp(transform.position.y, VerticalBoundary.min, VerticalBoundary.max),
+            transform.position.z
+        );
+
+        // --- Rotate around Z-axis based on horizontal movement ---
+        float deltaX = transform.position.x - previousPos.x; // horizontal movement
+        float zRotation = Mathf.Clamp(-deltaX * 200f, -22f, 22f); // scale deltaX to reach ±22°
+
+        // Smooth rotation (increase Lerp factor for faster response)
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, zRotation), 0.5f);
+
 
     }
     public void CheckBoundaries()
