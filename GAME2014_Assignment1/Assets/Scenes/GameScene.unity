@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Background (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6693464916428172485, guid: 5fc429842e6e0f4478cb796a49f7036a, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2083,7 +2087,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1192424661239916358, guid: 402c08e3afc3ba8409adf8d1ab0248e5, type: 3}
       propertyPath: speedRange.max
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1192424661239916358, guid: 402c08e3afc3ba8409adf8d1ab0248e5, type: 3}
       propertyPath: screenVerticalBoundary.max
@@ -2271,13 +2275,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 702024376}
     - target: {fileID: 6774089311906760380, guid: 7d1902dc1d6997f40841c360afa0e5b7, type: 3}
+      propertyPath: explosionClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d3576349fc345924a905c4cf7bd353b2, type: 3}
+    - target: {fileID: 6774089311906760380, guid: 7d1902dc1d6997f40841c360afa0e5b7, type: 3}
       propertyPath: shootingSpeed
-      value: 20
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6774089311906760380, guid: 7d1902dc1d6997f40841c360afa0e5b7, type: 3}
       propertyPath: spawnPosition
       value: 
       objectReference: {fileID: 1744001820}
+    - target: {fileID: 6774089311906760380, guid: 7d1902dc1d6997f40841c360afa0e5b7, type: 3}
+      propertyPath: helicopterClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 22cd51bab3e61b44c835842f74f83589, type: 3}
     - target: {fileID: 6774089311906760380, guid: 7d1902dc1d6997f40841c360afa0e5b7, type: 3}
       propertyPath: explosionPrefab
       value: 
@@ -2301,7 +2313,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1192424661239916358, guid: 402c08e3afc3ba8409adf8d1ab0248e5, type: 3}
       propertyPath: speedRange.max
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1192424661239916358, guid: 402c08e3afc3ba8409adf8d1ab0248e5, type: 3}
       propertyPath: screenVerticalBoundary.max

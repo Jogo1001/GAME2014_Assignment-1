@@ -18,6 +18,9 @@ public class Enemy : MonoBehaviour
     BulletManager bulletManager;
     GameController gameController;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip KillClip;
+
     void Start()
     {
         bulletManager = FindObjectOfType<BulletManager>();
@@ -30,7 +33,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        DetectPlayer();
+     
         transform.Translate(Vector3.down * speed * Time.deltaTime);
 
         float xPos = Mathf.PingPong(Time.time * speed, screenHorizontalBoundary.max - screenHorizontalBoundary.min) + screenHorizontalBoundary.min;
@@ -69,6 +72,9 @@ public class Enemy : MonoBehaviour
         if (collision.CompareTag("Bullet"))
         {
             DestroyingSequence();
+
+            if (KillClip != null)
+                AudioManager.Instance.PlayKill(KillClip, 1.5f);
             bulletManager.ReturnBullet(collision.gameObject);
             gameController.ChangeScore(5);
         }

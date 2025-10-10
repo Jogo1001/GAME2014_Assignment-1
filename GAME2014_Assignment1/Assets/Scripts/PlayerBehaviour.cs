@@ -33,11 +33,17 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] GameObject explosionPrefab;  
     [SerializeField] SpriteRenderer playerSprite;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip helicopterClip;
+    [SerializeField] AudioClip explosionClip;
+    private bool isHeliPlaying = false;
+
     bool isShooting = false;
     bool isRespawning = false;
     private Collider2D playerCollider;
     void Start()
     {
+       
         MoveInput = _playerController.FindAction("Move");
         bulletManager = FindObjectOfType<BulletManager>();
         gamecontroller = FindObjectOfType<GameController>();
@@ -74,12 +80,22 @@ public class PlayerBehaviour : MonoBehaviour
                     isShooting = true;
                     StartCoroutine(ShootingRoutine());
                 }
+            if (!isHeliPlaying && helicopterClip != null)
+            {
+                AudioManager.Instance.PlayHelicopter(helicopterClip, 0.3f);
+                isHeliPlaying = true;
             }
+        }
             else
             {
 
                 isShooting = false;
+            if (isHeliPlaying)
+            {
+                AudioManager.Instance.StopSFX();
+                isHeliPlaying = false;
             }
+        }
         
     }
     IEnumerator ShootingRoutine()
@@ -135,7 +151,9 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("You Got Hit!");
             FindObjectOfType<PlayerHealthUI>().TakeDamage(1);
 
-           
+            if (explosionClip != null)
+                AudioManager.Instance.PlayExplosion(explosionClip, 1f);
+
             playerSprite.enabled = false;
             playerCollider.enabled = false;
              isShooting = false;
@@ -171,7 +189,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         playerCollider.enabled = true;
         isShooting = false;
-       
+        isRespawning = false;
+
     }
 
     IEnumerator FlashPlayerSprite()
@@ -182,7 +201,7 @@ public class PlayerBehaviour : MonoBehaviour
         float flashSpeed = 0.1f;
         float elapsed = 0f;
 
-        isRespawning = false;
+       
         while (elapsed < flashDuration)
         {
             playerSprite.color = (playerSprite.color.a > 0.5f) ? transparentColor : originalColor;

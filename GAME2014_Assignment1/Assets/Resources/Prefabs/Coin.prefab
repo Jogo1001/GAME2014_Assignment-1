@@ -195,3 +195,4 @@ MonoBehaviour:
     min: -5.95
     max: 5.97
   pickupEffectPrefab: {fileID: 8822098344806668931, guid: a33a9138da57385498ed9e2339bfeb2a, type: 3}
+  CoinClip: {fileID: 8300000, guid: ec8cbf76d7d5ff44887f76b36ac871a6, type: 3}

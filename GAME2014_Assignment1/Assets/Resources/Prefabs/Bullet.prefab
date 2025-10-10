@@ -145,7 +145,7 @@ MonoBehaviour:
   speed: 10
   verticalboundry:
     min: 0
-    max: 4
+    max: 5
 --- !u!50 &3312733560558901146
 Rigidbody2D:
   serializedVersion: 5

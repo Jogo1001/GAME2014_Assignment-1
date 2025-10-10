@@ -6,8 +6,8 @@ public class PickupBehaviour : MonoBehaviour
     float speed;
     bool isCollected = false;
 
-    [SerializeField] GameObject pickupEffectPrefab; 
-
+    [SerializeField] GameObject pickupEffectPrefab;
+    [SerializeField] AudioClip CoinClip;
     public void Initialize(Boundary boundary, float moveSpeed)
     {
         verticalBoundary = boundary;
@@ -39,6 +39,9 @@ public class PickupBehaviour : MonoBehaviour
           
             if (pickupEffectPrefab != null)
             {
+                if (CoinClip != null)
+                    AudioManager.Instance.PlayCoin(CoinClip, 1f);
+
                 GameObject effect = Instantiate(pickupEffectPrefab, transform.position, Quaternion.identity);
                 Animator effectAnim = effect.GetComponent<Animator>();
 

@@ -136,11 +136,7 @@ MonoBehaviour:
   screenVerticalBoundary:
     min: -5.97
     max: 5.52
-  detectionRadius: 3
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  deathDuration: 0.7
+  KillClip: {fileID: 8300000, guid: 9f232279d67a6904c9cdb20b4def7ed6, type: 3}
 --- !u!60 &5470837304377768202
 PolygonCollider2D:
   m_ObjectHideFlags: 0
