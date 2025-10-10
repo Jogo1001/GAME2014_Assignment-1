@@ -41,6 +41,7 @@ public class PlayerHealthUI : MonoBehaviour
             if (GameOver != null)
             {
                 AudioManager.Instance.PlayMusic(GameOver, 1f);
+                AudioManager.Instance.sfxSource.Stop();
             }
         }
     }

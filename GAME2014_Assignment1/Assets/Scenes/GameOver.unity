@@ -895,6 +895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverManager
   finalScoreText: {fileID: 1455442567}
+  Music: {fileID: 8300000, guid: d2fbb7dcfbd914340b1f0b4660c3562e, type: 3}
 --- !u!4 &1451298127
 Transform:
   m_ObjectHideFlags: 0

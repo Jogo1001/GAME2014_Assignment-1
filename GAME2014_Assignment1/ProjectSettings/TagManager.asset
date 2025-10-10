@@ -52,6 +52,12 @@ TagManager:
   - name: Bullet
     uniqueID: 3238721241
     locked: 0
+  - name: Coin
+    uniqueID: 2884294901
+    locked: 0
+  - name: Boss
+    uniqueID: 1775631525
+    locked: 0
   - name: Player
     uniqueID: 326841053
     locked: 0

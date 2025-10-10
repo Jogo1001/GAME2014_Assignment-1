@@ -5,6 +5,7 @@ using TMPro;
 public class GameOverManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI finalScoreText;
+    [SerializeField] private AudioClip Music;
 
     void Start()
     {
@@ -17,10 +18,18 @@ public class GameOverManager : MonoBehaviour
     public void PlayAgain()
     {
         SceneManager.LoadScene("GameScene");
+        if (Music != null)
+        {
+            AudioManager.Instance.PlayMusic(Music, 0.6f);
+        }
     }
 
     public void BackToMenu()
     {
         SceneManager.LoadScene("Menu");
+        if (Music != null)
+        {
+            AudioManager.Instance.PlayMusic(Music, 0.6f);
+        }
     }
 }

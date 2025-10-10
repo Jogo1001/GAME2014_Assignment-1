@@ -1251,6 +1251,7 @@ MonoBehaviour:
   - {fileID: 1004927954}
   - {fileID: 338611455}
   - {fileID: 2079958358}
+  GameOver: {fileID: 8300000, guid: 973ad6cfaa62eb048b03c39507f5034c, type: 3}
 --- !u!4 &1535610373
 Transform:
   m_ObjectHideFlags: 0

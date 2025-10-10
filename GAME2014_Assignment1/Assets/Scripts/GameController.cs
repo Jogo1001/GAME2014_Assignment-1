@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!bossSpawned && score >= 100)
+        if (!bossSpawned && score >= 300)
         {
             bossSpawned = true;
             SpawnBoss();

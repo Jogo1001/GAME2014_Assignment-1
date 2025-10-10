@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossBehaviour : MonoBehaviour
 {
@@ -18,12 +19,17 @@ public class BossBehaviour : MonoBehaviour
     [SerializeField] private SpriteRenderer bossSprite;
     [SerializeField] private Color hitColor = Color.red;
     [SerializeField] private float flashDuration = 0.1f;
+    [SerializeField] GameObject explosionPrefab;
+    [SerializeField] AudioClip explosionClip;
+    [SerializeField] AudioClip Victory;
 
     private bool isInvulnerable = true;
     private Collider2D bossCollider;
     private Vector3 startPos;
     BulletManager bulletManager;
     private Coroutine flashRoutine;
+ 
+
 
 
     void Start()
@@ -91,7 +97,7 @@ public class BossBehaviour : MonoBehaviour
     {
         if (!isInvulnerable && collision.CompareTag("Bullet"))
         {
-            TakeDamage(1);
+            TakeDamage(3);
 
             if (flashRoutine != null)
             {
@@ -113,13 +119,32 @@ public class BossBehaviour : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Die();
+            bossCollider.enabled = false;
+            StartCoroutine(Die());
         }
+     
+       
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
-       
+
+        if (explosionClip != null)
+            AudioManager.Instance.PlayExplosion(explosionClip, 3f);
+        
+
+        if (explosionPrefab != null)
+        {
+            GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(explosion, 1f);
+        }
+
+      
+        yield return new WaitForSeconds(3f);
+
+        SceneManager.LoadScene("WinScene");
+        AudioManager.Instance.PlayMusic(Victory, 1f);
+        AudioManager.Instance.sfxSource.Stop();
         Destroy(gameObject);
     }
 

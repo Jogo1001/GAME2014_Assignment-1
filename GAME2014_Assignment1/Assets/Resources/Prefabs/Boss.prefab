@@ -78,8 +78,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 326841053
-  m_SortingLayer: 4
+  m_SortingLayerID: 1775631525
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 56459007d8c14a049b2868d066df61bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -113,6 +113,9 @@ MonoBehaviour:
   bossSprite: {fileID: 8527685849497070385}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.1
+  explosionPrefab: {fileID: 6870988159858909518, guid: 27016fa911643514bbb3a6a890580358, type: 3}
+  explosionClip: {fileID: 8300000, guid: d3576349fc345924a905c4cf7bd353b2, type: 3}
+  Victory: {fileID: 8300000, guid: 5b6c915b4f01f1b4b914c95800ec7762, type: 3}
 --- !u!60 &7680961417637686015
 PolygonCollider2D:
   m_ObjectHideFlags: 0
