@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3642713794947276906}
   - component: {fileID: 8527685849497070385}
   - component: {fileID: 7607120266842401532}
-  - component: {fileID: 1988550508032780442}
+  - component: {fileID: 7680961417637686015}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -109,7 +109,11 @@ MonoBehaviour:
   minX: -1.43
   maxX: 1.43
   targetY: 3.74
---- !u!60 &1988550508032780442
+  maxHealth: 500
+  bossSprite: {fileID: 8527685849497070385}
+  hitColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
+--- !u!60 &7680961417637686015
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

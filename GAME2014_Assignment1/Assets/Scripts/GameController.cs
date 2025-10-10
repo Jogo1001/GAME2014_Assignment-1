@@ -21,7 +21,15 @@ public class GameController : MonoBehaviour
         FinalScore = score;
         SceneManager.LoadScene(sceneIndex);
     }
+    private void FixedUpdate()
+    {
+        if (!bossSpawned && score >= 100)
+        {
+            bossSpawned = true;
+            SpawnBoss();
 
+        }
+    }
     public void ChangeScore(int ScoreChangeAmount)
     {
         score += ScoreChangeAmount;
@@ -29,12 +37,7 @@ public class GameController : MonoBehaviour
         string scoreMessage = "Score: " + score;
         scoreText.text = scoreMessage;
 
-        if (!bossSpawned && score >= 100)
-        {
-            bossSpawned = true;
-            SpawnBoss();
-       
-        }
+  
     }
     void SpawnBoss()
     {

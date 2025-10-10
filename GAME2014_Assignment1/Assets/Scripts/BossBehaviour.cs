@@ -10,13 +10,34 @@ public class BossBehaviour : MonoBehaviour
     [SerializeField] private float maxX = 1.43f;
     [SerializeField] private float targetY = 3.74f;
 
-    private bool isInvulnerable = true;
+    [Header("Boss Stats")]
+    [SerializeField] private int maxHealth = 500;
+    private int currentHealth;
 
+    [Header("Visuals")]
+    [SerializeField] private SpriteRenderer bossSprite;
+    [SerializeField] private Color hitColor = Color.red;
+    [SerializeField] private float flashDuration = 0.1f;
+
+    private bool isInvulnerable = true;
+    private Collider2D bossCollider;
     private Vector3 startPos;
+    BulletManager bulletManager;
+    private Coroutine flashRoutine;
+
 
     void Start()
     {
         startPos = transform.position;
+        currentHealth = maxHealth;
+
+        if (bossSprite == null)
+            bossSprite = GetComponent<SpriteRenderer>();
+
+        bossCollider = GetComponent<Collider2D>();
+        bossCollider.enabled = false;
+
+        bulletManager = FindObjectOfType<BulletManager>();
     }
 
     public void StartBossSequence()
@@ -26,6 +47,7 @@ public class BossBehaviour : MonoBehaviour
 
     private IEnumerator BossSequence()
     {
+
        
         Vector3 targetPos = new Vector3(transform.position.x, targetY, transform.position.z);
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
@@ -34,12 +56,12 @@ public class BossBehaviour : MonoBehaviour
             yield return null;
         }
 
-    
         isInvulnerable = true;
         yield return new WaitForSeconds(invulnerableTime);
         isInvulnerable = false;
+        bossCollider.enabled = true; 
 
-        
+     
         StartCoroutine(HorizontalMovement());
     }
 
@@ -65,7 +87,63 @@ public class BossBehaviour : MonoBehaviour
             }
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isInvulnerable && collision.CompareTag("Bullet"))
+        {
+            TakeDamage(1);
 
+            if (flashRoutine != null)
+            {
+                StopCoroutine(flashRoutine);
+                bossSprite.color = Color.white; 
+            }
+
+            flashRoutine = StartCoroutine(FlashSprite());
+            bulletManager.ReturnBullet(collision.gameObject);
+
+
+
+        }
+    }
+
+    private void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+       
+        Destroy(gameObject);
+    }
+
+    private IEnumerator FlashSprite()
+    {
+        Color originalColor = bossSprite.color;
+        Color flashColor = hitColor;
+
+        float elapsed = 0f;
+        float totalFlashTime = 0.3f;
+
+        while (elapsed < totalFlashTime)
+        {
+           
+            float lerp = Mathf.PingPong(Time.time * 10f, 1f);
+            bossSprite.color = Color.Lerp(originalColor, flashColor, lerp);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        bossSprite.color = originalColor; 
+        flashRoutine = null;
+    }
     public bool IsInvulnerable()
     {
         return isInvulnerable;

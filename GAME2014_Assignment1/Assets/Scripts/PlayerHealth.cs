@@ -8,7 +8,9 @@ public class PlayerHealthUI : MonoBehaviour
     int currentHealth;
 
     [Header("Heart Sprites (5)")]
-    [SerializeField] GameObject[] hearts; 
+    [SerializeField] GameObject[] hearts;
+
+    [SerializeField] private AudioClip GameOver;
 
     void Start()
     {
@@ -35,7 +37,11 @@ public class PlayerHealthUI : MonoBehaviour
         if (currentHealth <= 0)
         {
           
-            SceneManager.LoadScene("GameOver"); 
+            SceneManager.LoadScene("GameOver");
+            if (GameOver != null)
+            {
+                AudioManager.Instance.PlayMusic(GameOver, 1f);
+            }
         }
     }
 
