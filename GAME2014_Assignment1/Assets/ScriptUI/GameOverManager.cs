@@ -11,7 +11,7 @@ public class GameOverManager : MonoBehaviour
     {
         if (finalScoreText != null)
         {
-            finalScoreText.text = "Final Score: " + GameController.FinalScore;
+            finalScoreText.text = "Score: " + GameController.FinalScore;
         }
     }
 

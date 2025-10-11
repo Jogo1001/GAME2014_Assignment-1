@@ -30,7 +30,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     [Header("Respawn Settings")]
     [SerializeField] Transform spawnPosition;
-    [SerializeField] GameObject explosionPrefab;  
+    [SerializeField] GameObject explosionPrefab;
     [SerializeField] SpriteRenderer playerSprite;
 
     [Header("Audio")]
@@ -43,7 +43,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Collider2D playerCollider;
     void Start()
     {
-       
+
         MoveInput = _playerController.FindAction("Move");
         bulletManager = FindObjectOfType<BulletManager>();
         gamecontroller = FindObjectOfType<GameController>();
@@ -69,34 +69,34 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void HandleShootingState()
     {
-      
-            Vector2 moveValue = MoveInput.ReadValue<Vector2>();
 
-            if (moveValue.magnitude > 0.05f)
+        Vector2 moveValue = MoveInput.ReadValue<Vector2>();
+
+        if (moveValue.magnitude > 0.05f)
+        {
+
+            if (!isShooting)
             {
-
-                if (!isShooting)
-                {
-                    isShooting = true;
-                    StartCoroutine(ShootingRoutine());
-                }
+                isShooting = true;
+                StartCoroutine(ShootingRoutine());
+            }
             if (!isHeliPlaying && helicopterClip != null)
             {
                 AudioManager.Instance.PlayHelicopter(helicopterClip, 0.3f);
                 isHeliPlaying = true;
             }
         }
-            else
-            {
+        else
+        {
 
-                isShooting = false;
+            isShooting = false;
             if (isHeliPlaying)
             {
                 AudioManager.Instance.StopSFX();
                 isHeliPlaying = false;
             }
         }
-        
+
     }
     IEnumerator ShootingRoutine()
     {
@@ -107,33 +107,33 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void TouchScreenMove() 
+    void TouchScreenMove()
     {
         Vector2 pointerPos = MoveInput.ReadValue<Vector2>();
 
-     
+
         Vector3 targetPos = camera.ScreenToWorldPoint(new Vector3(pointerPos.x, pointerPos.y, Mathf.Abs(camera.transform.position.z)));
 
-     
+
         targetPos.z = transform.position.z;
 
-       
+
         float step = speed * Time.deltaTime;
         Vector3 previousPos = transform.position;
         transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
 
-      
+
         transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, HorizontalBoundary.min, HorizontalBoundary.max),
             Mathf.Clamp(transform.position.y, VerticalBoundary.min, VerticalBoundary.max),
             transform.position.z
         );
 
-       
-        float deltaX = transform.position.x - previousPos.x;
-        float zRotation = Mathf.Clamp(-deltaX * 200f, -22f, 22f); 
 
-       
+        float deltaX = transform.position.x - previousPos.x;
+        float zRotation = Mathf.Clamp(-deltaX * 200f, -22f, 22f);
+
+
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, zRotation), 0.5f);
 
 
@@ -168,6 +168,24 @@ public class PlayerBehaviour : MonoBehaviour
 
             collision.GetComponent<Enemy>().DestroyingSequence();
 
+            StartCoroutine(PlayerRespawn());
+        }
+        else if(collision.CompareTag("BossBullet") || collision.CompareTag("EnemyBullet"))
+        {
+            FindObjectOfType<PlayerHealthUI>().TakeDamage(1);
+
+            if (explosionClip != null)
+                AudioManager.Instance.PlayExplosion(explosionClip, 1f);
+            playerSprite.enabled = false;
+            playerCollider.enabled = false;
+            isShooting = false;
+            isRespawning = true;
+            if (explosionPrefab != null)
+            {
+                GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                Destroy(explosion, 1f);
+
+            }
             StartCoroutine(PlayerRespawn());
         }
 
