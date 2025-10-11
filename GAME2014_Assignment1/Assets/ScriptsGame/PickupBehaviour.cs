@@ -34,7 +34,7 @@ public class PickupBehaviour : MonoBehaviour
         if (collision.CompareTag("Player") && !isCollected)
         {
             isCollected = true;
-            FindObjectOfType<GameController>().ChangeScore(10);
+            FindObjectOfType<GameController>().ChangeScore(30);
 
           
             if (pickupEffectPrefab != null)

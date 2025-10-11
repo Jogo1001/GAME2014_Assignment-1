@@ -92,6 +92,14 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Euler(Vector3.zero);
         transform.localScale = Vector3.one;
         GetComponent<SpriteRenderer>().color = Color.white;
+
+        var shooter = GetComponent<EnemyShooting>();
+        if (shooter != null)
+            shooter.ResetShot();
+    }
+    public bool GetIsDying()
+    {
+        return IsDying;
     }
 
 }
