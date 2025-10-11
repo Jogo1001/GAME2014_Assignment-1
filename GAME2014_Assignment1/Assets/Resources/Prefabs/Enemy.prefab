@@ -238,7 +238,7 @@ PolygonCollider2D:
       - {x: -0.53333336, y: 0.45000002}
       - {x: -0.53333336, y: 0.43333334}
       - {x: -0.5222222, y: 0.42222223}
-      - {x: -0.5, y: 0.4166667}
+      - {x: -0.30820474, y: 0.32322794}
       - {x: -0.4, y: 0.37777779}
       - {x: -0.38333336, y: 0.31666666}
       - {x: -0.29444444, y: 0.2888889}
@@ -275,6 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyShooting
   projectilePrefab: {fileID: 4043204230196902633, guid: fa53897f1711c87428dd0b74cd87136a, type: 3}
-  shootInterval: 5
   projectileSpeed: 4
   spawnOffset: {x: 0, y: -0.5, z: 0}
+  shootActivationY: 4.28

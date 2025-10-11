@@ -43,7 +43,7 @@ public class PlayerBehaviour : MonoBehaviour
     private Collider2D playerCollider;
     void Start()
     {
-
+        Application.targetFrameRate = 60;
         MoveInput = _playerController.FindAction("Move");
         bulletManager = FindObjectOfType<BulletManager>();
         gamecontroller = FindObjectOfType<GameController>();

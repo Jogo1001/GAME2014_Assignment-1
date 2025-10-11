@@ -9,7 +9,8 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-       if (Instance == null)
+        Application.targetFrameRate = 60;
+        if (Instance == null)
     {
         Instance = this;
         DontDestroyOnLoad(gameObject);
