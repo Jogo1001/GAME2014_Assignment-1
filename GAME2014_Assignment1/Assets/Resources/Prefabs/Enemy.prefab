@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5425663855106306177}
   - component: {fileID: 1192424661239916358}
   - component: {fileID: 5470837304377768202}
+  - component: {fileID: 1704571718609024652}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -261,3 +262,19 @@ PolygonCollider2D:
       - {x: 0.11666667, y: -0.072222225}
       - {x: 0.15555556, y: 0}
   m_UseDelaunayMesh: 0
+--- !u!114 &1704571718609024652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3220130138039404211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3104c83997af0984088892a46f01aa4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyShooting
+  projectilePrefab: {fileID: 4043204230196902633, guid: fa53897f1711c87428dd0b74cd87136a, type: 3}
+  shootInterval: 5
+  projectileSpeed: 4
+  spawnOffset: {x: 0, y: -0.5, z: 0}
